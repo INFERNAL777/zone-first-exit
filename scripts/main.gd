@@ -104,7 +104,7 @@ func _update_hunger() -> void:
 func _draw() -> void:
 	screen_size = get_viewport_rect().size
 	draw_rect(Rect2(Vector2.ZERO, screen_size), BG)
-	var scale_factor := min(screen_size.x / 360.0, screen_size.y / 640.0)
+	var scale_factor: float = minf(screen_size.x / 360.0, screen_size.y / 640.0)
 	var offset := Vector2((screen_size.x - 360.0 * scale_factor) * 0.5, (screen_size.y - 640.0 * scale_factor) * 0.5)
 	draw_set_transform(offset, 0.0, Vector2(scale_factor, scale_factor))
 	if world_mode == "well":
@@ -240,7 +240,7 @@ func _draw_hud() -> void:
 	draw_rect(Rect2(5,5,350,43), Color("#101310"))
 	draw_rect(Rect2(5,5,3,43), GOLD)
 	draw_string(ui_font, Vector2(14,20), "ГОРЕВИК  •  1995", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, TEXT)
-	var hunger := ["СЫТ","ЛЁГКИЙ ГОЛОД","ГОЛОД","СИЛЬНЫЙ ГОЛОД","СРЫВ"][clampi(hunger_level,0,4)]
+	var hunger: String = ["СЫТ","ЛЁГКИЙ ГОЛОД","ГОЛОД","СИЛЬНЫЙ ГОЛОД","СРЫВ"][clampi(hunger_level,0,4)]
 	draw_string(ui_font, Vector2(14,36), "ЗДОРОВЬЕ %d   %s" % [health,hunger], HORIZONTAL_ALIGNMENT_LEFT, -1, 9, GOLD)
 	draw_rect(Rect2(5,50,350,28), Color("#101310"))
 	draw_string(ui_font, Vector2(12,68), action_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, TEXT)
@@ -318,7 +318,7 @@ func _input(event: InputEvent) -> void:
 		move_input = Vector2.ZERO
 
 func _to_game_coords(p: Vector2) -> Vector2:
-	var sf := min(screen_size.x / 360.0, screen_size.y / 640.0)
+	var sf: float = minf(screen_size.x / 360.0, screen_size.y / 640.0)
 	var off := Vector2((screen_size.x - 360.0 * sf) * 0.5, (screen_size.y - 640.0 * sf) * 0.5)
 	return (p - off) / sf
 
