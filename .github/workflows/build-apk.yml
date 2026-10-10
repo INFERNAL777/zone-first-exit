@@ -19,10 +19,12 @@ jobs:
         run: |
           mkdir -p build
           docker run --rm \
+            --entrypoint /bin/bash \
             -v "${{ github.workspace }}:/root/project" \
             -w /root/project \
             barichello/godot-ci:4.3 \
-            sh -lc '
+            -lc '
+              set -euxo pipefail
               mkdir -p /root/.config/godot /root/.android
               cat > /root/.config/godot/editor_settings-4.3.tres <<EOF
               [gd_resource type="EditorSettings" format=3]
@@ -38,6 +40,7 @@ jobs:
               fi
               godot --headless --editor --path /root/project --quit
               godot --headless --path /root/project --export-debug "Android" /root/project/build/zone-first-exit.apk
+              test -s /root/project/build/zone-first-exit.apk
             '
 
       - name: Upload APK
