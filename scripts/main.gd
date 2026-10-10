@@ -32,9 +32,6 @@ var choice_panel: VBoxContainer
 var art_area: Control
 
 func _ready() -> void:
-	get_viewport().content_scale_size = Vector2i(360, 640)
-	get_viewport().content_scale_mode = Window.CONTENT_SCALE_MODE_VIEWPORT
-	get_viewport().content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_build_ui()
 	queue_redraw()
@@ -75,7 +72,7 @@ func _build_ui() -> void:
 	choice_panel = VBoxContainer.new()
 	choice_panel.position = Vector2(8, 407)
 	choice_panel.size = Vector2(344, 225)
-	choice_panel.add_theme_constant_override("separation", 5)
+	choice_panel.add_theme_constant_override("separation", 3)
 	add_child(choice_panel)
 
 func _process(_delta: float) -> void:
@@ -239,7 +236,7 @@ func _refresh_choices() -> void:
 	for option in options:
 		var b := Button.new()
 		b.text = str(option.text)
-		b.custom_minimum_size = Vector2(344, 42)
+		b.custom_minimum_size = Vector2(344, 34)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.add_theme_font_size_override("font_size", 11)
 		b.add_theme_color_override("font_color", TEXT)
