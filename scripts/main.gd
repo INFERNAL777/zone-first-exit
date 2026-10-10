@@ -70,10 +70,10 @@ func _process(delta: float) -> void:
 		var candidate := player_pos + v * speed * delta
 		if _can_move(candidate):
 			player_pos = candidate
-			elif _can_move(Vector2(candidate.x, player_pos.y)):
-				player_pos.x = candidate.x
-			elif _can_move(Vector2(player_pos.x, candidate.y)):
-				player_pos.y = candidate.y
+		elif _can_move(Vector2(candidate.x, player_pos.y)):
+			player_pos.x = candidate.x
+		elif _can_move(Vector2(player_pos.x, candidate.y)):
+			player_pos.y = candidate.y
 		time_minutes += int(delta * 0.4)
 		if time_minutes >= 1440:
 			time_minutes = 0
