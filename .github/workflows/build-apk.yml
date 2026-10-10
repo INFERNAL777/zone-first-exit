@@ -30,6 +30,11 @@ jobs:
         run: |
           sdkmanager --install "platform-tools" "build-tools;33.0.2" "build-tools;34.0.0" "platforms;android-33" "platforms;android-34" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;23.2.8568313"
 
+      - name: Download Godot export templates
+        run: |
+          curl -fL --retry 3 https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -o godot_export_templates.tpz
+          test -s godot_export_templates.tpz
+
       - name: Build APK with Godot CI image
         run: |
           mkdir -p build
@@ -42,16 +47,15 @@ jobs:
             -lc '
               set -euxo pipefail
               mkdir -p /root/.config/godot /root/.android
-              echo 'W2dkX3Jlc291cmNlIHR5cGU9IkVkaXRvclNldHRpbmdzIiBmb3JtYXQ9M10KCltyZXNvdXJjZV0KZXhwb3J0L2FuZHJvaWQvamF2YV9zZGtfcGF0aCA9ICIvdXNyL2xpYi9qdm0vamF2YS0xNy1vcGVuamRrLWFtZDY0IgpleHBvcnQvYW5kcm9pZC9hbmRyb2lkX3Nka19wYXRoID0gIi9vcHQvYW5kcm9pZC1zZGsiCmV4cG9ydC9hbmRyb2lkL2RlYnVnX2tleXN0b3JlID0gIi9yb290Ly5hbmRyb2lkL2RlYnVnLmtleXN0b3JlIgpleHBvcnQvYW5kcm9pZC9kZWJ1Z19rZXlzdG9yZV91c2VyID0gImFuZHJvaWRkZWJ1Z2tleSIKZXhwb3J0L2FuZHJvaWQvZGVidWdfa2V5c3RvcmVfcGFzcyA9ICJhbmRyb2lkIgo=' | base64 -d > /root/.config/godot/editor_settings-4.3.tres
+              echo "W2dkX3Jlc291cmNlIHR5cGU9IkVkaXRvclNldHRpbmdzIiBmb3JtYXQ9M10KCltyZXNvdXJjZV0KZXhwb3J0L2FuZHJvaWQvamF2YV9zZGtfcGF0aCA9ICIvdXNyL2xpYi9qdm0vamF2YS0xNy1vcGVuamRrLWFtZDY0IgpleHBvcnQvYW5kcm9pZC9hbmRyb2lkX3Nka19wYXRoID0gIi9vcHQvYW5kcm9pZC1zZGsiCmV4cG9ydC9hbmRyb2lkL2RlYnVnX2tleXN0b3JlID0gIi9yb290Ly5hbmRyb2lkL2RlYnVnLmtleXN0b3JlIgpleHBvcnQvYW5kcm9pZC9kZWJ1Z19rZXlzdG9yZV91c2VyID0gImFuZHJvaWRkZWJ1Z2tleSIKZXhwb3J0L2FuZHJvaWQvZGVidWdfa2V5c3RvcmVfcGFzcyA9ICJhbmRyb2lkIgo=" | base64 -d > /root/.config/godot/editor_settings-4.3.tres
               if [ ! -f /root/.android/debug.keystore ]; then
                 keytool -genkeypair -v -keystore /root/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
               fi
               test -x /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager
               test -d /opt/android-sdk/platforms/android-34
               test -d /opt/android-sdk/build-tools/34.0.0
-              curl -fL --retry 3 https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -o /tmp/godot_export_templates.tpz
               mkdir -p /tmp/godot_export_templates /root/.local/share/godot/export_templates/4.3.stable
-              unzip -oq /tmp/godot_export_templates.tpz -d /tmp/godot_export_templates
+              unzip -oq /root/project/godot_export_templates.tpz -d /tmp/godot_export_templates
               cp -a /tmp/godot_export_templates/templates/. /root/.local/share/godot/export_templates/4.3.stable/
               test -s /root/.local/share/godot/export_templates/4.3.stable/android_debug.apk
               test -s /root/.local/share/godot/export_templates/4.3.stable/android_release.apk
