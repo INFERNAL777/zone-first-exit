@@ -1,48 +1,25 @@
 config_version=5
 
 [application]
-config/name="Zone: First Exit"
+config/name="Горевик: Колосовка"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/description="Offline first-person shooter prototype for Android"
+config/description="Пиксельный хоррор-квест о горевике в России 1995 года. Оффлайн, Android."
 
 [display]
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/window_width_override=1280
-window/size/window_height_override=720
-window/stretch/mode="canvas_items"
-window/handheld/orientation=0
+window/size/viewport_width=360
+window/size/viewport_height=640
+window/size/window_width_override=360
+window/size/window_height_override=640
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
+window/handheld/orientation=1
 
 [rendering]
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
-textures/default_filters/use_nearest_mipmap_filter=false
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.055, 0.07, 0.065, 1)
-
-[input]
-move_forward={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"physical_keycode":87)]
-}
-move_back={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"physical_keycode":83)]
-}
-move_left={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"physical_keycode":65)]
-}
-move_right={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"physical_keycode":68)]
-}
-shoot={
-"deadzone": 0.2,
-"events": [Object(InputEventMouseButton,"button_index":1)]
-}
-reload={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"physical_keycode":82)]
-}
