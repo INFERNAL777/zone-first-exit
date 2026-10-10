@@ -49,6 +49,12 @@ jobs:
               test -x /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager
               test -d /opt/android-sdk/platforms/android-34
               test -d /opt/android-sdk/build-tools/34.0.0
+              curl -fL --retry 3 https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -o /tmp/godot_export_templates.tpz
+              mkdir -p /tmp/godot_export_templates /root/.local/share/godot/export_templates/4.3.stable
+              unzip -oq /tmp/godot_export_templates.tpz -d /tmp/godot_export_templates
+              cp -a /tmp/godot_export_templates/templates/. /root/.local/share/godot/export_templates/4.3.stable/
+              test -s /root/.local/share/godot/export_templates/4.3.stable/android_debug.apk
+              test -s /root/.local/share/godot/export_templates/4.3.stable/android_release.apk
               godot --headless --editor --path /root/project --quit
               godot --headless --path /root/project --export-debug "Android" /root/project/build/zone-first-exit.apk
               test -s /root/project/build/zone-first-exit.apk
