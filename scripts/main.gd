@@ -162,50 +162,92 @@ func _draw_well_world() -> void:
 		draw_rect(Rect2(167,118,28,5), Color("#9c8158"))
 
 func _draw_village_world() -> void:
-	# Dark, muddy village floor.
-	draw_rect(Rect2(0,0,360,640), Color("#1b211c"))
-	for y in range(-2, 18):
-		for x in range(-2, 12):
-			var p := _project(Vector2(x * 48.0, y * 48.0))
-			if p.x > -45 and p.x < 405 and p.y > 65 and p.y < 530:
-				var shade := DIRT if (x * 7 + y * 11) % 3 == 0 else DIRT2
-				draw_rect(Rect2(p.x, p.y, 23, 9), shade)
-	# Broken road.
-	_poly(PackedVector2Array([_project(Vector2(-230,-30)),_project(Vector2(235,-30)),_project(Vector2(235,15)),_project(Vector2(-230,15))]), Color("#4a4535"))
-	# Abandoned house, roof first, with a dark doorway.
+	# Muddy village floor with layered pixel noise and deep night pools.
+	draw_rect(Rect2(0, 0, 360, 640), Color("#101817"))
+	for y in range(0, 640, 8):
+		for x in range(0, 360, 8):
+			var seed := int(x * 13 + y * 29 + x * y)
+			var n := seed % 11
+			var c := Color("#18211d") if n < 5 else Color("#1c241f")
+			if n == 7:
+				c = Color("#252820")
+			draw_rect(Rect2(x, y, 8, 8), c)
+	# Broken, glistening track winding through the settlement.
+	_poly(PackedVector2Array([Vector2(-15,218),Vector2(360,92),Vector2(360,405),Vector2(0,565)]), Color("#34352c"))
+	_poly(PackedVector2Array([Vector2(0,263),Vector2(360,143),Vector2(360,351),Vector2(0,501)]), Color("#242a24"))
+	for i in range(110):
+		var x := float((i * 47 + 19) % 360)
+		var y := float((i * 83 + 31) % 640)
+		var w := float(2 + (i % 7))
+		var col := Color("#4a5146") if i % 3 == 0 else Color("#252e2b")
+		if y > 160 and y < 510 and (x < y * 0.55 + 55 or x > y * 0.55 + 105):
+			draw_rect(Rect2(x,y,w,2), col)
+	# Wet puddles catch a little cold moonlight.
+	for p in [Vector2(53,290),Vector2(91,352),Vector2(272,276),Vector2(236,424),Vector2(148,461)]:
+		draw_ellipse(Rect2(p.x,p.y,22,7), Color("#3c4a49"))
+		draw_line(p+Vector2(4,2),p+Vector2(14,1),Color("#71817a"),1.0)
+	# The buildings are drawn back-to-front to keep the player readable.
 	_draw_house(Vector2(-123,-128))
+	_draw_tree(Vector2(195,-175))
 	_draw_house(Vector2(133,45))
-	# Dead trees and undergrowth.
-	for t in [Vector2(-195,-20),Vector2(195,-175),Vector2(-202,156),Vector2(188,176),Vector2(25,-205)]:
-		_draw_tree(t)
-	# Well exit/ladder behind player.
+	_draw_tree(Vector2(-195,-20))
+	_draw_tree(Vector2(-202,156))
+	_draw_tree(Vector2(188,176))
+	_draw_tree(Vector2(25,-205))
 	_draw_well_marker(Vector2(0,0))
-	# Tracks lead toward the hut.
+	# Faint footprints only appear when the mud is inspected.
 	if has_seen_tracks:
-		for i in range(6):
-			var p := _project(Vector2(18 + i * 17, 28 + i * 14))
-			draw_rect(Rect2(p.x,p.y,5,3), Color("#111510"))
+		for i in range(8):
+			var p := _project(Vector2(18 + i * 15, 25 + i * 13))
+			draw_rect(Rect2(p.x,p.y,5,3), Color("#0c1110"))
+			draw_rect(Rect2(p.x+1,p.y+1,2,1), Color("#5d6253"))
+	# Distant mist softens the edges of the village.
+	for i in range(7):
+		var yy := 105.0 + i * 54.0
+		draw_rect(Rect2(0, yy, 360, 10), Color(0.46,0.54,0.53,0.025))
 
 func _draw_house(origin: Vector2) -> void:
 	var p := _project(origin)
-	# Shadow and walls in chunky pixel blocks.
-	_poly(PackedVector2Array([p+Vector2(-49,6),p+Vector2(7,-18),p+Vector2(52,4),p+Vector2(-4,29)]), Color("#111511"))
-	_poly(PackedVector2Array([p+Vector2(-43,-7),p+Vector2(0,-27),p+Vector2(41,-8),p+Vector2(-1,12)]), Color("#514638"))
-	_poly(PackedVector2Array([p+Vector2(-43,-7),p+Vector2(-1,12),p+Vector2(-1,38),p+Vector2(-43,17)]), Color("#463c2e"))
-	_poly(PackedVector2Array([p+Vector2(-1,12),p+Vector2(41,-8),p+Vector2(41,18),p+Vector2(-1,38)]), Color("#332e25"))
-	draw_rect(Rect2(p.x-9,p.y+13,13,23), Color("#10120f"))
-	draw_rect(Rect2(p.x-38,p.y-5,11,9), Color("#24251e"))
+	# Deep cast shadow and uneven log walls.
+	_poly(PackedVector2Array([p+Vector2(-56,10),p+Vector2(8,-22),p+Vector2(60,5),p+Vector2(-5,37)]), Color("#080d0c"))
+	_poly(PackedVector2Array([p+Vector2(-44,-7),p+Vector2(-2,13),p+Vector2(-2,43),p+Vector2(-44,20)]), Color("#3b3329"))
+	_poly(PackedVector2Array([p+Vector2(-2,13),p+Vector2(42,-8),p+Vector2(42,20),p+Vector2(-2,43)]), Color("#292923"))
+	# Roof silhouette, shingles and broken edges.
+	_poly(PackedVector2Array([p+Vector2(-58,-8),p+Vector2(-5,-37),p+Vector2(54,-11),p+Vector2(1,17)]), Color("#171d1c"))
+	_poly(PackedVector2Array([p+Vector2(-51,-9),p+Vector2(-5,-32),p+Vector2(47,-10),p+Vector2(1,13)]), Color("#30342e"))
+	for i in range(8):
+		var x := p.x - 42 + i * 11
+		var y := p.y - 13 + int(i % 2) * 3
+		draw_line(Vector2(x,y),Vector2(x+8,y-4),Color("#44463b"),1.0)
+		draw_line(Vector2(x,y+6),Vector2(x+7,y+2),Color("#202622"),1.0)
+	# Black doorway, timber frame and amber window.
+	draw_rect(Rect2(p.x-10,p.y+22,15,21), Color("#090d0c"))
+	draw_rect(Rect2(p.x-12,p.y+20,3,24), Color("#62503a"))
+	draw_rect(Rect2(p.x-36,p.y+2,12,10), Color("#0b100e"))
+	draw_rect(Rect2(p.x-34,p.y+4,8,6), Color("#b66c2d"))
+	draw_rect(Rect2(p.x-32,p.y+4,3,6), Color("#e5a34a"))
+	draw_rect(Rect2(p.x-37,p.y+1,14,2), Color("#5b5140"))
+	draw_rect(Rect2(p.x-37,p.y+11,14,2), Color("#5b5140"))
+	# Light spills onto the wet ground, broken into pixel clusters.
+	for i in range(4):
+		draw_rect(Rect2(p.x-39-i*3,p.y+13+i*3,20+i*6,2), Color(0.78,0.38,0.12,0.10-i*0.018))
 	if aura_on and (origin.x < 0 or has_checked_house):
-		draw_rect(Rect2(p.x-5,p.y+2,7,8), Color("#566a43"))
+		draw_circle(p+Vector2(0,12),13,Color(0.34,0.62,0.34,0.12))
+		draw_rect(Rect2(p.x-5,p.y+3,7,8), Color("#8ca76a"))
 
 func _draw_tree(pos: Vector2) -> void:
 	var p := _project(pos)
-	# A blocky dead tree with a long shadow.
-	_poly(PackedVector2Array([p+Vector2(-3,0),p+Vector2(26,9),p+Vector2(4,20),p+Vector2(-24,10)]), Color("#111510"))
-	draw_rect(Rect2(p.x-4,p.y-22,9,30), Color("#28271e"))
-	draw_rect(Rect2(p.x-14,p.y-29,13,5), Color("#28271e"))
-	draw_rect(Rect2(p.x+2,p.y-37,16,5), Color("#28271e"))
-	draw_rect(Rect2(p.x-1,p.y-46,5,15), Color("#28271e"))
+	_poly(PackedVector2Array([p+Vector2(-4,0),p+Vector2(29,11),p+Vector2(5,24),p+Vector2(-26,12)]), Color("#080e0c"))
+	# Knotted trunk with jagged, dead branches.
+	draw_rect(Rect2(p.x-4,p.y-22,9,31), Color("#282923"))
+	draw_rect(Rect2(p.x-8,p.y-34,7,17), Color("#282923"))
+	draw_rect(Rect2(p.x+1,p.y-42,5,20), Color("#292a23"))
+	draw_rect(Rect2(p.x-19,p.y-40,15,4), Color("#292a23"))
+	draw_rect(Rect2(p.x+3,p.y-49,19,4), Color("#292a23"))
+	draw_rect(Rect2(p.x-12,p.y-53,4,14), Color("#292a23"))
+	draw_rect(Rect2(p.x+15,p.y-57,4,13), Color("#292a23"))
+	draw_line(p+Vector2(-2,-21),p+Vector2(-15,-39),Color("#454236"),1.0)
+	draw_line(p+Vector2(3,-29),p+Vector2(18,-48),Color("#454236"),1.0)
 
 func _draw_well_marker(pos: Vector2) -> void:
 	var p := _project(pos)
@@ -215,53 +257,71 @@ func _draw_well_marker(pos: Vector2) -> void:
 
 func _draw_player() -> void:
 	var p := Vector2(180.0 + player_pos.x, 306.0 + player_pos.y) if world_mode == "well" else Vector2(180,306)
-	# Shadow, legs, dark skin, rough hair, yellow eyes; all pixel-aligned.
-	draw_rect(Rect2(p.x-10,p.y+10,22,7), Color("#0e100d"))
-	draw_rect(Rect2(p.x-7,p.y+2,5,11), Color("#080a09"))
-	draw_rect(Rect2(p.x+3,p.y+2,5,11), Color("#080a09"))
-	draw_rect(Rect2(p.x-9,p.y-12,19,17), Color("#080a09"))
-	draw_rect(Rect2(p.x-8,p.y-22,17,13), Color("#090b0a"))
-	draw_rect(Rect2(p.x-10,p.y-24,7,7), Color("#090b0a"))
-	draw_rect(Rect2(p.x+6,p.y-25,7,8), Color("#090b0a"))
-	if player_facing.y < -0.25:
-		draw_rect(Rect2(p.x-5,p.y-19,3,3), GOLD)
-		draw_rect(Rect2(p.x+3,p.y-19,3,3), GOLD)
-	elif abs(player_facing.x) > 0.25:
-		draw_rect(Rect2(p.x-1,p.y-18,4,3), GOLD)
-	else:
-		draw_rect(Rect2(p.x-5,p.y-17,3,3), GOLD)
-		draw_rect(Rect2(p.x+3,p.y-17,3,3), GOLD)
-	# Claws.
-	draw_rect(Rect2(p.x-12,p.y-7,3,5), Color("#a9a18b"))
-	draw_rect(Rect2(p.x+10,p.y-7,3,5), Color("#a9a18b"))
+	# Ground shadow and a tiny glint on wet stones.
+	draw_ellipse(Rect2(p.x-13,p.y+10,27,9),Color(0.01,0.02,0.02,0.72))
+	draw_rect(Rect2(p.x-8,p.y+1,6,12),Color("#080b0a"))
+	draw_rect(Rect2(p.x+3,p.y+1,6,12),Color("#080b0a"))
+	# Long, worn coat and shoulders.
+	_poly(PackedVector2Array([p+Vector2(-10,-12),p+Vector2(-7,-20),p+Vector2(6,-20),p+Vector2(10,-12),p+Vector2(8,4),p+Vector2(-8,4)]),Color("#171b19"))
+	draw_rect(Rect2(p.x-8,p.y-11,16,5),Color("#30332b"))
+	draw_rect(Rect2(p.x-10,p.y-13,4,10),Color("#080b0a"))
+	draw_rect(Rect2(p.x+7,p.y-13,4,10),Color("#080b0a"))
+	# Face is almost lost in shadow; the eyes are the only bright detail.
+	draw_rect(Rect2(p.x-7,p.y-25,14,13),Color("#17130f"))
+	draw_rect(Rect2(p.x-9,p.y-24,4,7),Color("#080b0a"))
+	draw_rect(Rect2(p.x+6,p.y-24,4,7),Color("#080b0a"))
+	draw_rect(Rect2(p.x-5,p.y-19,4,2),GOLD)
+	draw_rect(Rect2(p.x+2,p.y-19,4,2),GOLD)
+	draw_rect(Rect2(p.x-4,p.y-17,2,3),Color("#b7a27b"))
+	# Claws and subtle rim light.
+	draw_rect(Rect2(p.x-12,p.y-8,3,6),Color("#b6b39b"))
+	draw_rect(Rect2(p.x+10,p.y-8,3,6),Color("#b6b39b"))
+	draw_rect(Rect2(p.x-10,p.y-11,2,8),Color("#56615a"))
+
+func draw_ellipse(rect: Rect2, color: Color) -> void:
+	var center := rect.position + rect.size * 0.5
+	var points := PackedVector2Array()
+	for i in range(16):
+		var angle := TAU * float(i) / 16.0
+		points.append(center + Vector2(cos(angle)*rect.size.x*0.5, sin(angle)*rect.size.y*0.5))
+	draw_colored_polygon(points, color)
 
 func _draw_hud() -> void:
-	# Top status and current objective.
-	draw_rect(Rect2(5,5,350,43), Color("#101310"))
-	draw_rect(Rect2(5,5,3,43), GOLD)
-	draw_string(ui_font, Vector2(14,20), "ГОРЕВИК  •  1995", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, TEXT)
+	# Framed, restrained survival HUD.
+	draw_rect(Rect2(5,5,350,43),Color(0.035,0.045,0.04,0.94))
+	draw_rect(Rect2(5,5,350,43),Color("#4b5144"),false,1.0)
+	draw_rect(Rect2(5,5,3,43),GOLD)
+	draw_string(ui_font,Vector2(14,20),"ГОРЕВИК  •  КОЛОСОВКА  •  1995",HORIZONTAL_ALIGNMENT_LEFT,-1,10,TEXT)
 	var hunger: String = ["СЫТ","ЛЁГКИЙ ГОЛОД","ГОЛОД","СИЛЬНЫЙ ГОЛОД","СРЫВ"][clampi(hunger_level,0,4)]
-	draw_string(ui_font, Vector2(14,36), "ЗДОРОВЬЕ %d   %s" % [health,hunger], HORIZONTAL_ALIGNMENT_LEFT, -1, 9, GOLD)
-	draw_rect(Rect2(5,50,350,28), Color("#101310"))
-	draw_string(ui_font, Vector2(12,68), action_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, TEXT)
-	# Touch joystick.
-	draw_circle(joy_origin, 34, Color(0.05,0.06,0.05,0.72))
-	draw_arc(joy_origin, 34, 0, TAU, 32, Color("#777663"), 2.0)
+	draw_string(ui_font,Vector2(14,36),"ЗДОРОВЬЕ %d   /   %s" % [health,hunger],HORIZONTAL_ALIGNMENT_LEFT,-1,9,GOLD)
+	draw_rect(Rect2(5,50,350,28),Color(0.035,0.045,0.04,0.94))
+	draw_rect(Rect2(5,50,350,28),Color("#333b33"),false,1.0)
+	draw_string(ui_font,Vector2(12,68),action_hint,HORIZONTAL_ALIGNMENT_LEFT,-1,10,TEXT)
+	# Vignette: darken the corners without hiding the play area.
+	for i in range(6):
+		var alpha := 0.035 + i * 0.012
+		draw_rect(Rect2(0,i*4,360,4),Color(0,0,0,alpha))
+		draw_rect(Rect2(0,640-(i+1)*4,360,4),Color(0,0,0,alpha))
+		draw_rect(Rect2(i*4,0,4,640),Color(0,0,0,alpha))
+		draw_rect(Rect2(360-(i+1)*4,0,4,640),Color(0,0,0,alpha))
+	# Touch joystick and action controls.
+	draw_circle(joy_origin,35,Color(0.035,0.045,0.04,0.72))
+	draw_arc(joy_origin,35,0,TAU,40,Color("#6e7566"),2.0)
 	var knob := joy_origin + move_input * 18.0
-	draw_circle(knob, 13, Color("#737365"))
-	draw_circle(knob, 7, Color("#b2ac91"))
-	# Touch action buttons.
-	_draw_button(Vector2(286,512), "АУРА", aura_on)
-	_draw_button(Vector2(286,570), "ДЕЙСТВИЕ", false)
-	# Small location and controls hint.
-	draw_string(ui_font, Vector2(9,605), "ДВИЖЕНИЕ", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("#a29c87"))
-	draw_string(ui_font, Vector2(219,625), "КАСАНИЕ — ДЕЙСТВИЕ", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color("#a29c87"))
+	draw_circle(knob,14,Color("#434c43"))
+	draw_circle(knob,8,Color("#a9aa92"))
+	_draw_button(Vector2(286,512),"ГЛАЗ",aura_on)
+	_draw_button(Vector2(286,570),"ОСМОТР",false)
+	draw_string(ui_font,Vector2(9,605),"ДВИЖЕНИЕ",HORIZONTAL_ALIGNMENT_LEFT,-1,8,Color("#a29c87"))
+	draw_string(ui_font,Vector2(219,625),"E / КАСАНИЕ — ДЕЙСТВИЕ",HORIZONTAL_ALIGNMENT_LEFT,-1,8,Color("#a29c87"))
 
 func _draw_button(center: Vector2, label: String, active: bool) -> void:
-	var color := Color("#586747") if active else Color("#282c26")
-	draw_rect(Rect2(center.x-40,center.y-22,80,44), color)
-	draw_rect(Rect2(center.x-40,center.y-22,80,44), Color("#8c896f"), false, 2.0)
-	draw_string(ui_font, center+Vector2(0,4), label, HORIZONTAL_ALIGNMENT_CENTER, 80, 9, TEXT)
+	var color := Color("#4b5a3d") if active else Color("#171d1a")
+	draw_circle(center,26,Color(0.01,0.02,0.02,0.72))
+	draw_arc(center,25,0,TAU,32,Color("#686e5d"),2.0)
+	draw_circle(center,19,color)
+	draw_arc(center,19,0,TAU,32,Color("#9a957c") if active else Color("#454b41"),1.0)
+	draw_string(ui_font,center+Vector2(0,4),label,HORIZONTAL_ALIGNMENT_CENTER,80,9,TEXT)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
