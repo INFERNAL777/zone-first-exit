@@ -214,7 +214,7 @@ func _draw_well_marker(pos: Vector2) -> void:
 	draw_rect(Rect2(p.x-19,p.y-13,38,3), Color("#686758"))
 
 func _draw_player() -> void:
-	var p := Vector2(180,306)
+	var p := Vector2(180.0 + player_pos.x, 306.0 + player_pos.y) if world_mode == "well" else Vector2(180,306)
 	# Shadow, legs, dark skin, rough hair, yellow eyes; all pixel-aligned.
 	draw_rect(Rect2(p.x-10,p.y+10,22,7), Color("#0e100d"))
 	draw_rect(Rect2(p.x-7,p.y+2,5,11), Color("#080a09"))
