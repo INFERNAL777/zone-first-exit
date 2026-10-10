@@ -42,16 +42,7 @@ jobs:
             -lc '
               set -euxo pipefail
               mkdir -p /root/.config/godot /root/.android
-              cat > /root/.config/godot/editor_settings-4.3.tres <<EOF
-              [gd_resource type="EditorSettings" format=3]
-
-              [resource]
-              export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"
-              export/android/android_sdk_path = "/opt/android-sdk"
-              export/android/debug_keystore = "/root/.android/debug.keystore"
-              export/android/debug_keystore_user = "androiddebugkey"
-              export/android/debug_keystore_pass = "android"
-              EOF
+              echo 'W2dkX3Jlc291cmNlIHR5cGU9IkVkaXRvclNldHRpbmdzIiBmb3JtYXQ9M10KCltyZXNvdXJjZV0KZXhwb3J0L2FuZHJvaWQvamF2YV9zZGtfcGF0aCA9ICIvdXNyL2xpYi9qdm0vamF2YS0xNy1vcGVuamRrLWFtZDY0IgpleHBvcnQvYW5kcm9pZC9hbmRyb2lkX3Nka19wYXRoID0gIi9vcHQvYW5kcm9pZC1zZGsiCmV4cG9ydC9hbmRyb2lkL2RlYnVnX2tleXN0b3JlID0gIi9yb290Ly5hbmRyb2lkL2RlYnVnLmtleXN0b3JlIgpleHBvcnQvYW5kcm9pZC9kZWJ1Z19rZXlzdG9yZV91c2VyID0gImFuZHJvaWRkZWJ1Z2tleSIKZXhwb3J0L2FuZHJvaWQvZGVidWdfa2V5c3RvcmVfcGFzcyA9ICJhbmRyb2lkIgo=' | base64 -d > /root/.config/godot/editor_settings-4.3.tres
               if [ ! -f /root/.android/debug.keystore ]; then
                 keytool -genkeypair -v -keystore /root/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
               fi
