@@ -42,6 +42,9 @@ jobs:
             --entrypoint /bin/bash \
             -v "${{ github.workspace }}:/root/project" \
             -v "${ANDROID_HOME}:/opt/android-sdk" \
+            -e GODOT_ANDROID_KEYSTORE_DEBUG_PATH=/root/.android/debug.keystore \
+            -e GODOT_ANDROID_KEYSTORE_DEBUG_USER=androiddebugkey \
+            -e GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD=android \
             -w /root/project \
             barichello/godot-ci:4.3 \
             -lc '
@@ -53,7 +56,6 @@ jobs:
               fi
               echo "=== Java environment ==="
               java -version
-              ls -la /usr/lib/jvm
               test -x /usr/lib/jvm/java-17-openjdk-amd64/bin/java
               test -x /usr/lib/jvm/java-17-openjdk-amd64/bin/keytool
               echo "=== Android SDK checks ==="
@@ -62,8 +64,6 @@ jobs:
               test -x /opt/android-sdk/build-tools/34.0.0/apksigner
               test -d /opt/android-sdk/platforms/android-34
               test -d /opt/android-sdk/build-tools/34.0.0
-              echo "=== Godot settings ==="
-              cat /root/.config/godot/editor_settings-4.3.tres
               mkdir -p /tmp/godot_export_templates /root/.local/share/godot/export_templates/4.3.stable
               unzip -oq /root/project/godot_export_templates.tpz -d /tmp/godot_export_templates
               cp -a /tmp/godot_export_templates/templates/. /root/.local/share/godot/export_templates/4.3.stable/
