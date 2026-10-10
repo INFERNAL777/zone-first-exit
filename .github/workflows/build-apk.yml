@@ -21,7 +21,7 @@ jobs:
           docker run --rm \
             -v "${{ github.workspace }}:/root/project" \
             -w /root/project \
-            barichello/godot-ci:4.3.0 \
+            barichello/godot-ci:4.3 \
             godot --headless --path /root/project --export-debug "Android" /root/project/build/zone-first-exit.apk
 
       - name: Upload APK
