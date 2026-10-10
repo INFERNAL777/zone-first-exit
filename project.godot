@@ -4,7 +4,7 @@ config_version=5
 config/name="Горевик: Колосовка"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/description="Пиксельный хоррор-квест о горевике в России 1995 года. Оффлайн, Android."
+config/description="Пиксельный top-down horror adventure, Россия 1995. Оффлайн Android."
 
 [display]
 window/size/viewport_width=360
@@ -12,7 +12,7 @@ window/size/viewport_height=640
 window/size/window_width_override=360
 window/size/window_height_override=640
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
 window/stretch/scale_mode="integer"
 window/handheld/orientation=1
 
@@ -21,5 +21,4 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 textures/default_filters/use_nearest_mipmap_filter=true
-textures/default_filters/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.055, 0.07, 0.065, 1)
