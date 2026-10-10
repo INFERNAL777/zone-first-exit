@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="640" viewBox="0 0 360 640" shape-rendering="crispEdges">
+<defs>
+ <linearGradient id="night" x2="0" y2="1"><stop stop-color="#101a20"/><stop offset=".48" stop-color="#202b2a"/><stop offset="1" stop-color="#101714"/></linearGradient>
+ <linearGradient id="mud" x2=".15" y2="1"><stop stop-color="#34382f"/><stop offset="1" stop-color="#191f1b"/></linearGradient>
+ <linearGradient id="roof" x2="0" y2="1"><stop stop-color="#424239"/><stop offset="1" stop-color="#191f1d"/></linearGradient>
+ <linearGradient id="wood" x2="1" y2=".2"><stop stop-color="#493b2b"/><stop offset=".55" stop-color="#2d2b23"/><stop offset="1" stop-color="#1b211d"/></linearGradient>
+ <radialGradient id="lantern"><stop stop-color="#ffce72" stop-opacity=".6"/><stop offset="1" stop-color="#e18a35" stop-opacity="0"/></radialGradient>
+ <pattern id="grain" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M1 3h3 M9 11h5 M5 15h2" stroke="#899084" stroke-opacity=".15"/><path d="M12 1h1 M2 9h1" stroke="#080d0b" stroke-opacity=".55"/></pattern>
+</defs>
+<!-- deep rainy night -->
+<rect width="360" height="640" fill="url(#night)"/>
+<path d="M0 105L60 64 111 100 163 53 223 104 291 63 360 104V310H0Z" fill="#182322"/>
+<path d="M0 146L49 109 92 139 139 97 193 143 248 108 302 144 360 116V330H0Z" fill="#202a27"/>
+<!-- broken silhouettes of far village -->
+<g fill="#111917">
+ <path d="M0 173V143L17 143V132L30 132V153L44 153V177Z"/>
+ <path d="M269 165V131L282 131V117L297 117V141L311 141V159L329 159V134L346 134V150L360 150V183Z"/>
+ <path d="M82 177V147L94 147V137L111 137V158L128 158V179Z"/>
+</g>
+<!-- moon haze and fog -->
+<ellipse cx="270" cy="145" rx="120" ry="47" fill="#75817a" opacity=".06"/>
+<path d="M0 201Q61 183 122 201T244 201T360 197V225Q299 211 240 226T118 225T0 228Z" fill="#b3b9a4" opacity=".07"/>
+<!-- muddy ground -->
+<path d="M0 242L360 191V640H0Z" fill="url(#mud)"/>
+<path d="M0 300L360 226V273L0 389Z" fill="#414237" opacity=".6"/>
+<path d="M0 338L360 260V311L0 438Z" fill="#292f28"/>
+<path d="M0 360L360 282" stroke="#596052" stroke-opacity=".32" stroke-width="3"/>
+<!-- pools of rainwater -->
+<g fill="#263735" stroke="#61716b" stroke-opacity=".65" stroke-width="1">
+ <path d="M20 399l19-7 22 3 7 8-19 8-25-3z"/><path d="M268 341l17-5 22 2 8 6-18 6-25-2z"/>
+ <path d="M87 486l24-8 26 4 9 7-21 8-29-3z"/><path d="M231 548l28-8 24 3 11 8-23 8-30-4z"/>
+ <path d="M137 291l13-4 15 2 4 4-14 4-16-2z"/>
+</g>
+<g stroke="#a0aaa0" stroke-opacity=".4"><path d="M31 400h21M277 342h17M100 486h25M243 549h22"/></g>
+<!-- left hut shadow -->
+<path d="M-17 235L60 185 153 229 72 291Z" fill="#080d0b" opacity=".9"/>
+<!-- left hut walls, log texture -->
+<path d="M-8 172L67 207V286L-8 250Z" fill="#332c23"/>
+<path d="M67 207L143 169V249L67 286Z" fill="url(#wood)"/>
+<g stroke="#66513a" stroke-width="4" opacity=".8">
+ <path d="M-3 188L65 219M-4 204L65 235M-5 221L65 251M-6 238L65 268"/>
+ <path d="M70 220L139 185M70 237L139 202M70 254L139 219M70 271L139 236"/>
+</g>
+<g stroke="#171d19" stroke-width="2"><path d="M-2 196L64 227M70 244L139 209M-4 229L65 260M70 270L139 235"/></g>
+<!-- left hut roof -->
+<path d="M-22 183L48 122 158 169 80 222Z" fill="#0b1110"/>
+<path d="M-15 176L48 129 150 171 79 211Z" fill="url(#roof)" stroke="#596052" stroke-width="2"/>
+<g stroke="#596052" stroke-width="2" opacity=".75">
+ <path d="M-3 174L52 135M13 183L65 140M31 190L81 146M50 198L98 154M69 205L116 162M87 202L134 170"/>
+</g>
+<!-- dark window and weak amber light -->
+<ellipse cx="23" cy="238" rx="45" ry="49" fill="url(#lantern)"/>
+<rect x="11" y="220" width="22" height="23" fill="#100f0b" stroke="#57452f" stroke-width="3"/>
+<rect x="15" y="224" width="14" height="15" fill="#b76c31"/>
+<path d="M22 224v15M15 231h14" stroke="#4d3020" stroke-width="2"/>
+<rect x="51" y="252" width="18" height="34" fill="#090d0b" stroke="#5b4830" stroke-width="3"/>
+<path d="M54 255v26M62 255v26" stroke="#2a2a21" stroke-width="2"/>
+<!-- right hut -->
+<path d="M204 285L270 244 376 287 305 341Z" fill="#090e0c"/>
+<path d="M215 223L283 253V331L215 300Z" fill="#302a21"/>
+<path d="M283 253L355 217V296L283 331Z" fill="#252923"/>
+<g stroke="#574531" stroke-width="4">
+ <path d="M217 240L281 270M217 257L281 287M217 275L281 305M217 291L281 322"/>
+ <path d="M286 270L352 237M286 288L352 255M286 306L352 273"/>
+</g>
+<path d="M195 231L270 173 369 216 283 268Z" fill="#0a100f"/>
+<path d="M205 226L271 181 358 219 282 257Z" fill="url(#roof)" stroke="#50564a" stroke-width="2"/>
+<g stroke="#656455" stroke-width="2" opacity=".7"><path d="M220 224L274 187M239 232L292 190M258 240L311 198M277 249L331 207M296 250L349 218"/></g>
+<ellipse cx="321" cy="278" rx="44" ry="43" fill="url(#lantern)"/>
+<rect x="310" y="265" width="20" height="19" fill="#110f0b" stroke="#5b4931" stroke-width="3"/>
+<rect x="314" y="269" width="12" height="11" fill="#c17b39"/>
+<path d="M320 269v11M314 274h12" stroke="#51321e" stroke-width="2"/>
+<rect x="270" y="291" width="19" height="35" fill="#090c0a" stroke="#4c4030" stroke-width="3"/>
+<!-- fences, crooked and broken -->
+<g stroke="#151b16" stroke-width="8" stroke-linecap="square"><path d="M0 326L78 356 139 334 175 355M189 362L249 337 304 350 360 325"/></g>
+<g stroke="#5c4b34" stroke-width="4"><path d="M0 319L78 349 139 327 175 348M189 355L249 330 304 343 360 318"/><path d="M0 340L78 370 139 348 175 369M189 376L249 351 304 364 360 339"/></g>
+<g stroke="#292a21" stroke-width="3"><path d="M18 323v35M48 333v35M79 344v35M111 339v31M145 337v34M201 350v37M234 336v35M271 337v35M307 344v34M343 326v35"/></g>
+<!-- dead trees -->
+<g stroke-linecap="square" fill="none">
+ <g stroke="#101714" stroke-width="14"><path d="M36 355L42 276 23 242M41 297L63 267 67 238M39 319L14 301"/><path d="M329 368L322 281 344 246M324 306L301 278 298 253M326 331L350 312"/></g>
+ <g stroke="#34352a" stroke-width="6"><path d="M36 355L42 276 23 242M41 297L63 267 67 238M39 319L14 301"/><path d="M329 368L322 281 344 246M324 306L301 278 298 253M326 331L350 312"/></g>
+ <g stroke="#5a5946" stroke-width="2"><path d="M39 320L34 286M324 320L328 291"/></g>
+</g>
+<!-- weeds, stones, grass tufts -->
+<g fill="#4a5940"><path d="M9 448l4-15 3 12 6-9-2 15zM66 426l3-13 5 10 4-7 0 15zM160 385l3-12 4 11 6-6-2 14zM333 448l3-14 5 11 5-7-1 16zM40 559l3-13 5 10 4-8 1 15zM301 594l4-16 4 12 6-8-1 17zM185 599l3-12 4 9 6-6-2 13z"/></g>
+<g fill="#161c18"><path d="M8 461l12-5 8 4-10 5zM145 430l10-4 9 3-11 5zM318 510l13-5 8 4-12 5zM62 593l11-4 8 3-11 5zM220 461l9-4 10 3-9 5z"/></g>
+<!-- well near foreground, chipped stone ring -->
+<ellipse cx="178" cy="455" rx="58" ry="23" fill="#080d0b" opacity=".85"/>
+<path d="M123 437L140 419 214 419 233 438 214 465 141 465Z" fill="#3c4138" stroke="#111815" stroke-width="4"/>
+<path d="M132 437L145 425 207 425 224 438 207 455 145 455Z" fill="#171f1c"/>
+<path d="M130 436L144 423 208 423 226 437" fill="none" stroke="#737464" stroke-width="5"/>
+<g fill="#55594b"><path d="M132 438l13-10 10 4-12 12zM154 427l14-3 8 7-15 3zM183 427l15-1 10 7-17 2zM207 431l13 8-9 9-10-7zM144 448l12-5 10 8-14 6zM178 450l14-5 10 8-14 7z"/></g>
+<ellipse cx="178" cy="438" rx="34" ry="11" fill="#050908" stroke="#777565" stroke-width="3"/>
+<ellipse cx="178" cy="438" rx="25" ry="7" fill="#030605"/>
+<path d="M139 418L143 402 149 402 151 422M205 421L208 400 214 400 217 424" fill="#282a23" stroke="#6a6049" stroke-width="3"/>
+<path d="M142 402L211 400" stroke="#6b6048" stroke-width="4"/>
+<!-- puddle highlights, muddy ruts and scattered stones -->
+<g fill="#66746b" opacity=".8"><rect x="30" y="514" width="18" height="2"/><rect x="34" y="518" width="9" height="1"/><rect x="278" y="399" width="16" height="2"/><rect x="283" y="403" width="8" height="1"/><rect x="102" y="571" width="22" height="2"/><rect x="110" y="575" width="10" height="1"/><rect x="234" y="492" width="18" height="2"/></g>
+<g fill="#0d1310"><rect x="74" y="381" width="5" height="3"/><rect x="92" y="448" width="7" height="4"/><rect x="251" y="456" width="8" height="3"/><rect x="300" y="557" width="6" height="4"/><rect x="147" y="527" width="5" height="3"/><rect x="192" y="579" width="8" height="4"/><rect x="48" y="606" width="7" height="3"/></g>
+<!-- foreground mist bands -->
+<path d="M0 387Q70 373 137 389T270 386T360 390V402Q280 396 210 405T72 400T0 405Z" fill="#c5cbbb" opacity=".07"/>
+<path d="M0 526Q80 513 160 528T300 522T360 528V539Q280 532 200 541T50 538T0 540Z" fill="#aab6aa" opacity=".045"/>
+<!-- rain streaks -->
+<g stroke="#9eaaa3" stroke-width="1" opacity=".18"><path d="M13 91l-4 12M61 164l-4 12M102 83l-4 12M171 122l-4 12M222 179l-4 12M292 81l-4 12M340 149l-4 12M83 301l-4 12M183 245l-4 12M251 309l-4 12M326 467l-4 12M43 491l-4 12M133 545l-4 12M283 579l-4 12"/></g>
+<!-- final darkening -->
+<rect width="360" height="640" fill="url(#grain)" opacity=".55"/>
+<rect width="360" height="640" fill="#07100e" opacity=".12"/>
+</svg>

@@ -1,6 +1,7 @@
 extends Node2D
 
 # Pixel-art, angled top-down exploration prototype. No dice rolls.
+const VILLAGE_TEXTURE: Texture2D = preload("res://art/village_night.svg")
 const TILE := 32.0
 const BG := Color("#111613")
 const DIRT := Color("#393a2d")
@@ -162,49 +163,15 @@ func _draw_well_world() -> void:
 		draw_rect(Rect2(167,118,28,5), Color("#9c8158"))
 
 func _draw_village_world() -> void:
-	# Muddy village floor with layered pixel noise and deep night pools.
-	draw_rect(Rect2(0, 0, 360, 640), Color("#101817"))
-	for y in range(0, 640, 8):
-		for x in range(0, 360, 8):
-			var seed := int(x * 13 + y * 29 + x * y)
-			var n := seed % 11
-			var c := Color("#18211d") if n < 5 else Color("#1c241f")
-			if n == 7:
-				c = Color("#252820")
-			draw_rect(Rect2(x, y, 8, 8), c)
-	# Broken, glistening track winding through the settlement.
-	_poly(PackedVector2Array([Vector2(-15,218),Vector2(360,92),Vector2(360,405),Vector2(0,565)]), Color("#34352c"))
-	_poly(PackedVector2Array([Vector2(0,263),Vector2(360,143),Vector2(360,351),Vector2(0,501)]), Color("#242a24"))
-	for i in range(110):
-		var x := float((i * 47 + 19) % 360)
-		var y := float((i * 83 + 31) % 640)
-		var w := float(2 + (i % 7))
-		var col := Color("#4a5146") if i % 3 == 0 else Color("#252e2b")
-		if y > 160 and y < 510 and (x < y * 0.55 + 55 or x > y * 0.55 + 105):
-			draw_rect(Rect2(x,y,w,2), col)
-	# Wet puddles catch a little cold moonlight.
-	for p in [Vector2(53,290),Vector2(91,352),Vector2(272,276),Vector2(236,424),Vector2(148,461)]:
-		draw_ellipse(Rect2(p.x,p.y,22,7), Color("#3c4a49"))
-		draw_line(p+Vector2(4,2),p+Vector2(14,1),Color("#71817a"),1.0)
-	# The buildings are drawn back-to-front to keep the player readable.
-	_draw_house(Vector2(-123,-128))
-	_draw_tree(Vector2(195,-175))
-	_draw_house(Vector2(133,45))
-	_draw_tree(Vector2(-195,-20))
-	_draw_tree(Vector2(-202,156))
-	_draw_tree(Vector2(188,176))
-	_draw_tree(Vector2(25,-205))
-	_draw_well_marker(Vector2(0,0))
-	# Faint footprints only appear when the mud is inspected.
+	# A real authored background texture, imported by Godot as a game asset.
+	# The player, HUD and touch controls remain live above this scene.
+	draw_texture_rect(VILLAGE_TEXTURE, Rect2(0, 0, 360, 640), false)
+	# Dynamic clues remain responsive to inspection.
 	if has_seen_tracks:
 		for i in range(8):
-			var p := _project(Vector2(18 + i * 15, 25 + i * 13))
-			draw_rect(Rect2(p.x,p.y,5,3), Color("#0c1110"))
-			draw_rect(Rect2(p.x+1,p.y+1,2,1), Color("#5d6253"))
-	# Distant mist softens the edges of the village.
-	for i in range(7):
-		var yy := 105.0 + i * 54.0
-		draw_rect(Rect2(0, yy, 360, 10), Color(0.46,0.54,0.53,0.025))
+			var p := Vector2(98 + i * 8, 408 + i * 11)
+			draw_rect(Rect2(p.x, p.y, 5, 3), Color("#0c1110"))
+			draw_rect(Rect2(p.x + 1, p.y + 1, 2, 1), Color("#5d6253"))
 
 func _draw_house(origin: Vector2) -> void:
 	var p := _project(origin)
