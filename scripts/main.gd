@@ -1,7 +1,7 @@
 extends Node2D
 
 # Pixel-art, angled top-down exploration prototype. No dice rolls.
-const VILLAGE_TEXTURE: Texture2D = preload("res://art/village_night.svg")
+const VILLAGE_TEXTURE: Texture2D = preload("res://art/village_night.bmp")
 const TILE := 32.0
 const BG := Color("#111613")
 const DIRT := Color("#393a2d")
