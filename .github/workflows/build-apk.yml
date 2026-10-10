@@ -51,16 +51,26 @@ jobs:
               if [ ! -f /root/.android/debug.keystore ]; then
                 keytool -genkeypair -v -keystore /root/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
               fi
+              echo "=== Java environment ==="
+              java -version
+              ls -la /usr/lib/jvm
+              test -x /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+              test -x /usr/lib/jvm/java-17-openjdk-amd64/bin/keytool
+              echo "=== Android SDK checks ==="
               test -x /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager
+              test -x /opt/android-sdk/platform-tools/adb
+              test -x /opt/android-sdk/build-tools/34.0.0/apksigner
               test -d /opt/android-sdk/platforms/android-34
               test -d /opt/android-sdk/build-tools/34.0.0
+              echo "=== Godot settings ==="
+              cat /root/.config/godot/editor_settings-4.3.tres
               mkdir -p /tmp/godot_export_templates /root/.local/share/godot/export_templates/4.3.stable
               unzip -oq /root/project/godot_export_templates.tpz -d /tmp/godot_export_templates
               cp -a /tmp/godot_export_templates/templates/. /root/.local/share/godot/export_templates/4.3.stable/
               test -s /root/.local/share/godot/export_templates/4.3.stable/android_debug.apk
               test -s /root/.local/share/godot/export_templates/4.3.stable/android_release.apk
-              godot --headless --editor --path /root/project --quit
-              godot --headless --path /root/project --export-debug "Android" /root/project/build/zone-first-exit.apk
+              godot --headless --editor --path /root/project --quit --verbose
+              godot --headless --verbose --path /root/project --export-debug "Android" /root/project/build/zone-first-exit.apk
               test -s /root/project/build/zone-first-exit.apk
             '
 
